@@ -21,6 +21,137 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
+     MOBILE MENU
+     ============================================================ */
+
+  const mobileMenu =
+    document.querySelector(
+      "[data-mobile-menu]"
+    );
+
+  const menuOpenButton =
+    document.querySelector(
+      "[data-menu-open]"
+    );
+
+
+  if (
+    mobileMenu &&
+    menuOpenButton
+  ) {
+
+    const desktopNav =
+      window.matchMedia(
+        "(min-width: 851px)"
+      );
+
+
+    const setMenu = open => {
+
+      mobileMenu.classList.toggle(
+        "is-open",
+        open
+      );
+
+      /* locks the page scroll while the overlay is open */
+      document.documentElement.classList.toggle(
+        "menu-open",
+        open
+      );
+
+      menuOpenButton.setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+    };
+
+
+    menuOpenButton.addEventListener(
+      "click",
+      () => {
+
+        setMenu(true);
+
+        /* flush styles: the overlay must be visible to take focus */
+        void mobileMenu.offsetWidth;
+
+        mobileMenu
+          .querySelector(
+            "[data-menu-close]"
+          )
+          .focus();
+
+      }
+    );
+
+
+    mobileMenu
+      .querySelector(
+        "[data-menu-close]"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          setMenu(false);
+
+          menuOpenButton.focus();
+
+        }
+      );
+
+
+    /* a link closes the menu, then the browser scrolls to its section */
+    mobileMenu
+      .querySelectorAll("a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => setMenu(false)
+        );
+
+      });
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          mobileMenu.classList.contains("is-open")
+        ) {
+
+          setMenu(false);
+
+          menuOpenButton.focus();
+
+        }
+
+      }
+    );
+
+
+    /* resized up to desktop with the menu open: release everything */
+    desktopNav.addEventListener(
+      "change",
+      event => {
+
+        if (event.matches) {
+
+          setMenu(false);
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ============================================================
      HERO PALETTE
      ============================================================ */
 
@@ -713,419 +844,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     SERVICES
-     ============================================================ */
-
-  const serviceTabs = [
-    ...document.querySelectorAll(
-      "[data-service-tab]"
-    )
-  ];
-
-
-  const serviceScenes = [
-    ...document.querySelectorAll(
-      "[data-service-scene]"
-    )
-  ];
-
-
-  function activateService(
-    name
-  ) {
-
-    serviceTabs.forEach(tab => {
-
-      const active =
-        tab.dataset.serviceTab ===
-        name;
-
-
-      tab.classList.toggle(
-        "is-active",
-        active
-      );
-
-
-      tab.setAttribute(
-        "aria-selected",
-        String(active)
-      );
-
-    });
-
-
-    serviceScenes.forEach(scene => {
-
-      const active =
-        scene.dataset.serviceScene ===
-        name;
-
-
-      scene.classList.toggle(
-        "is-active",
-        active
-      );
-
-
-      scene.setAttribute(
-        "aria-hidden",
-        String(!active)
-      );
-
-
-      if (!active) {
-
-        scene
-          .querySelectorAll(
-            ".subgrid-item.is-focused"
-          )
-          .forEach(item => {
-
-            item.classList.remove(
-              "is-focused"
-            );
-
-          });
-
-
-        if (scene.dataset.webFocus !== undefined) {
-
-          scene.dataset.webFocus = "";
-
-        }
-
-      }
-
-    });
-
-  }
-
-
-  serviceTabs.forEach(tab => {
-
-    tab.addEventListener(
-      "click",
-      () => {
-
-        activateService(
-          tab.dataset.serviceTab
-        );
-
-      }
-    );
-
-  });
-
-
-  /* ============================================================
-     SERVICES — SUBCATEGORY HOVER / TAP REACTIONS
-     ============================================================ */
-
-  const hoverCapable =
-    window.matchMedia(
-      "(hover: hover) and (pointer: fine)"
-    );
-
-  const webScene =
-    document.querySelector(
-      '[data-service-scene="web"]'
-    );
-
-
-  function clearFocusedSiblings(
-    scope,
-    exceptItem
-  ) {
-
-    scope
-      .querySelectorAll(
-        ".subgrid-item.is-focused"
-      )
-      .forEach(item => {
-
-        if (item !== exceptItem) {
-
-          item.classList.remove(
-            "is-focused"
-          );
-
-        }
-
-      });
-
-  }
-
-
-  document
-    .querySelectorAll(
-      ".service-subgrid .subgrid-item"
-    )
-    .forEach(item => {
-
-      const scene =
-        item.closest(
-          ".service-scene"
-        );
-
-      const focusKey =
-        item.dataset.focus;
-
-
-      if (hoverCapable.matches) {
-
-        item.addEventListener(
-          "mouseenter",
-          () => {
-
-            if (
-              webScene &&
-              scene === webScene &&
-              focusKey
-            ) {
-
-              webScene.dataset.webFocus =
-                focusKey;
-
-            }
-
-          }
-        );
-
-
-        item.addEventListener(
-          "mouseleave",
-          () => {
-
-            if (
-              webScene &&
-              scene === webScene &&
-              focusKey
-            ) {
-
-              webScene.dataset.webFocus = "";
-
-            }
-
-          }
-        );
-
-      }
-
-      else {
-
-        item.addEventListener(
-          "click",
-          () => {
-
-            const alreadyFocused =
-              item.classList.contains(
-                "is-focused"
-              );
-
-
-            clearFocusedSiblings(
-              scene,
-              item
-            );
-
-
-            item.classList.toggle(
-              "is-focused",
-              !alreadyFocused
-            );
-
-
-            if (
-              webScene &&
-              scene === webScene &&
-              focusKey
-            ) {
-
-              webScene.dataset.webFocus =
-                alreadyFocused ?
-                  "" :
-                  focusKey;
-
-            }
-
-          }
-        );
-
-      }
-
-    });
-
-
-  /* ============================================================
-     SERVICES — 3D SCENE PARALLAX
-     ============================================================ */
-
-  const serviceStage =
-    document.querySelector(
-      "[data-service-stage]"
-    );
-
-  const stage3dEls = [
-    ...document.querySelectorAll(
-      "[data-stage3d] .stage3d-inner"
-    )
-  ];
-
-
-  if (
-    serviceStage &&
-    stage3dEls.length &&
-    finePointer.matches &&
-    !reducedMotion.matches
-  ) {
-
-    const MAX_TILT_X = 9;
-    const MAX_TILT_Y = 12;
-    const IDLE_TILT_X = 5;
-    const IDLE_TILT_Y = -8;
-    const IDLE_DELAY = 1400;
-
-    let targetX = IDLE_TILT_X;
-    let targetY = IDLE_TILT_Y;
-    let currentX = IDLE_TILT_X;
-    let currentY = IDLE_TILT_Y;
-
-    let pointerActive = false;
-    let idleTimer = null;
-
-
-    serviceStage.addEventListener(
-      "mousemove",
-      event => {
-
-        const rect =
-          serviceStage.getBoundingClientRect();
-
-        const px =
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width -
-          0.5;
-
-        const py =
-          (
-            event.clientY -
-            rect.top
-          ) /
-          rect.height -
-          0.5;
-
-
-        targetX =
-          IDLE_TILT_X -
-          py * MAX_TILT_X * 2;
-
-        targetY =
-          IDLE_TILT_Y +
-          px * MAX_TILT_Y * 2;
-
-
-        pointerActive = true;
-
-        clearTimeout(idleTimer);
-
-        idleTimer =
-          setTimeout(
-            () => {
-              pointerActive = false;
-            },
-            IDLE_DELAY
-          );
-
-      }
-    );
-
-
-    serviceStage.addEventListener(
-      "mouseleave",
-      () => {
-
-        pointerActive = false;
-
-        clearTimeout(idleTimer);
-
-      }
-    );
-
-
-    function tick(
-      time
-    ) {
-
-      if (!pointerActive) {
-
-        targetX =
-          IDLE_TILT_X +
-          Math.sin(time / 4200) * 1.1;
-
-        targetY =
-          IDLE_TILT_Y +
-          Math.cos(time / 5300) * 1.6;
-
-      }
-
-
-      currentX +=
-        (
-          targetX -
-          currentX
-        ) * 0.06;
-
-      currentY +=
-        (
-          targetY -
-          currentY
-        ) * 0.06;
-
-
-      const activeStage3d =
-        stage3dEls.find(el =>
-          el
-            .closest(
-              ".service-scene"
-            )
-            .classList
-            .contains(
-              "is-active"
-            )
-        );
-
-
-      if (activeStage3d) {
-
-        activeStage3d.style.setProperty(
-          "--tilt-x",
-          `${currentX}deg`
-        );
-
-        activeStage3d.style.setProperty(
-          "--tilt-y",
-          `${currentY}deg`
-        );
-
-      }
-
-
-      requestAnimationFrame(tick);
-
-    }
-
-
-    requestAnimationFrame(tick);
-
-  }
-
-
-  /* ============================================================
-     SERVICES — MOBILE ACCORDION
+     SERVICES — ACCORDION
      ============================================================ */
 
   const accordionItems = [
@@ -1189,6 +908,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+  // desktop/tablet opens "Web" by default; mobile starts all closed
+  if (
+    accordionItems.length &&
+    window.matchMedia(
+      "(min-width: 701px)"
+    ).matches
+  ) {
+
+    accordionItems[0]
+      .querySelector(
+        "[data-accordion-trigger]"
+      )
+      .click();
+
+  }
+
+
   /* ============================================================
      PROJECT VIDEO — LAZY LOAD
      ============================================================ */
@@ -1204,6 +940,95 @@ document.addEventListener("DOMContentLoaded", () => {
     "IntersectionObserver" in window
   ) {
 
+    const onScreen =
+      new Set();
+
+
+    const setSource = video => {
+
+      if (
+        video.src ||
+        !video.dataset.src
+      ) {
+        return;
+      }
+
+      // playback is started by the observer below, not on load
+      if (
+        !reducedMotion.matches
+      ) {
+
+        video.autoplay = false;
+
+      }
+
+      video.src =
+        video.dataset.src;
+
+      video.load();
+
+    };
+
+
+    const playVideo = video => {
+
+      if (
+        reducedMotion.matches
+      ) {
+        return;
+      }
+
+      // mobile browsers only allow unattended playback when
+      // these are set as properties, not just as attributes
+      video.muted = true;
+
+      video.playsInline = true;
+
+      // covers a fast scroll that skips the early loading zone
+      setSource(video);
+
+      video
+        .play()
+        .catch(() => {});
+
+    };
+
+
+    // the file is fetched a little before the video scrolls in...
+    const videoLoader =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            const video =
+              entry.target;
+
+
+            if (
+              !entry.isIntersecting
+            ) {
+              return;
+            }
+
+
+            setSource(video);
+
+            videoLoader.unobserve(
+              video
+            );
+
+          });
+
+        },
+        {
+          rootMargin:
+            "600px 0px"
+        }
+      );
+
+
+    // ...and it starts only once it is actually on screen
     const videoObserver =
       new IntersectionObserver(
         entries => {
@@ -1218,32 +1043,15 @@ document.addEventListener("DOMContentLoaded", () => {
               entry.isIntersecting
             ) {
 
-              if (
-                !video.src &&
-                video.dataset.src
-              ) {
+              onScreen.add(video);
 
-                video.src =
-                  video.dataset.src;
-
-                video.load();
-
-              }
-
-
-              if (
-                !reducedMotion.matches
-              ) {
-
-                video
-                  .play()
-                  .catch(() => {});
-
-              }
+              playVideo(video);
 
             }
 
             else {
+
+              onScreen.delete(video);
 
               video.pause();
 
@@ -1253,13 +1061,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         },
         {
-          rootMargin:
-            "350px 0px"
+          threshold: .2
         }
       );
 
 
     projectVideos.forEach(video => {
+
+      // phones often refuse the first play() while the file is still
+      // arriving: try again as soon as it can actually play
+      video.addEventListener(
+        "canplay",
+        () => {
+
+          if (
+            onScreen.has(video) &&
+            video.paused
+          ) {
+            playVideo(video);
+          }
+
+        }
+      );
+
+      videoLoader.observe(
+        video
+      );
 
       videoObserver.observe(
         video
@@ -1271,36 +1098,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     LIVE SITE FRAME — rendered at 1440px, scaled to the preview
+     SITE RECORDING — shown over the replica once it can play
      ============================================================ */
 
   document
     .querySelectorAll(
-      ".lm-site-frame"
+      ".lm-site-video"
     )
-    .forEach(frame => {
+    .forEach(video => {
 
-      const fit = () => {
-
-        frame.style.setProperty(
-          "--lm-frame-scale",
-          frame.parentElement.clientWidth / 1440
-        );
-
-      };
-
-
-      fit();
-
-      new ResizeObserver(fit)
-        .observe(
-          frame.parentElement
-        );
-
-
-      frame.addEventListener(
-        "load",
-        () => frame.classList.add("is-loaded")
+      video.addEventListener(
+        "loadeddata",
+        () => video.classList.add("is-loaded")
       );
 
     });
@@ -2014,131 +1823,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             start:
               "top 78%",
-
-            once:
-              true
-
-          }
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================================
-       SERVICE BUTTONS
-       ========================================================== */
-
-    const serviceButtons =
-      gsap.utils.toArray(
-        ".service-tab"
-      );
-
-
-    if (
-      serviceButtons.length
-    ) {
-
-      gsap.fromTo(
-        serviceButtons,
-        {
-
-          x:
-            -28,
-
-          opacity:
-            0
-
-        },
-        {
-
-          x:
-            0,
-
-          opacity:
-            1,
-
-          duration:
-            .75,
-
-          stagger:
-            .09,
-
-          ease:
-            "power3.out",
-
-          scrollTrigger: {
-
-            trigger:
-              ".service-list",
-
-            start:
-              "top 84%",
-
-            once:
-              true
-
-          }
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================================
-       SERVICE STAGE
-       ========================================================== */
-
-    const serviceStage =
-      document.querySelector(
-        ".service-stage"
-      );
-
-
-    if (
-      serviceStage
-    ) {
-
-      gsap.fromTo(
-        serviceStage,
-        {
-
-          y:
-            40,
-
-          scale:
-            .98,
-
-          opacity:
-            .55
-
-        },
-        {
-
-          y:
-            0,
-
-          scale:
-            1,
-
-          opacity:
-            1,
-
-          duration:
-            .9,
-
-          ease:
-            "power3.out",
-
-          scrollTrigger: {
-
-            trigger:
-              ".services__layout",
-
-            start:
-              "top 84%",
 
             once:
               true

@@ -68,26 +68,35 @@
 
       <div class="nav-links">
         <a href="#about-intro">
-          About
+          Chi sono
         </a>
 
         <a href="#works">
-          Works
+          Progetti
         </a>
 
         <a href="#services">
-          Services
+          Servizi
         </a>
 
         <a href="#contact">
-          Contact
+          Contatti
         </a>
       </div>
 
 
-      <span class="language">
-        IT / EN
-      </span>
+      <!-- two-line toggle, shown instead of the links on tablet / mobile -->
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Apri il menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-open
+      >
+        <span></span>
+        <span></span>
+      </button>
 
     </nav>
 
@@ -124,7 +133,7 @@
 
     <div
       class="palette-card palette-card-01"
-      style="--swatch:#EEEAE2"
+      style="--swatch:#F2E3CD"
     >
       <span class="palette-number">
         01
@@ -132,37 +141,37 @@
 
       <span class="palette-info">
         <b>Warm Paper</b>
-        <small>#EEEAE2</small>
+        <small>#F2E3CD</small>
       </span>
     </div>
 
 
     <div
       class="palette-card palette-card-02"
-      style="--swatch:#96A08D"
+      style="--swatch:#713D45"
     >
       <span class="palette-number">
         02
       </span>
 
       <span class="palette-info">
-        <b>Dusty Sage</b>
-        <small>#96A08D</small>
+        <b>Deep Wine</b>
+        <small>#713D45</small>
       </span>
     </div>
 
 
     <div
       class="palette-card palette-card-03"
-      style="--swatch:#C3A471"
+      style="--swatch:#C8904E"
     >
       <span class="palette-number">
         03
       </span>
 
       <span class="palette-info">
-        <b>Champagne Gold</b>
-        <small>#C3A471</small>
+        <b>Warm Ochre</b>
+        <small>#C8904E</small>
       </span>
     </div>
 
@@ -179,6 +188,56 @@
     </a>
 
   </header>
+
+
+  <!-- =========================================================
+       MOBILE MENU — fullscreen overlay, tablet / mobile only
+       ========================================================= -->
+
+  <div
+    class="mobile-menu"
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    data-mobile-menu
+  >
+
+    <div class="mobile-menu__top">
+
+      <a
+        href="#top"
+        class="brand"
+        aria-label="Delphi Digital Creative Studio — Home"
+      >
+        <span class="brand-name">Delphi</span>
+
+        <span class="brand-sub">
+          Digital Creative Studio
+        </span>
+      </a>
+
+      <button
+        class="mobile-menu__close"
+        type="button"
+        aria-label="Chiudi il menu"
+        data-menu-close
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+
+    <nav class="mobile-menu__links" aria-label="Menu principale">
+      <a href="#about-intro">Chi sono</a>
+      <a href="#works">Progetti</a>
+      <a href="#services">Servizi</a>
+      <a href="#contact">Contatti</a>
+    </nav>
+
+  </div>
 
 
   <main>
@@ -226,9 +285,9 @@
               class="intro-copy__secondary"
               data-motion-copy
             >
-              Viaggiare è una delle cose che amo di più e spesso
-              i luoghi che visito finiscono per entrare nei miei
-              lavori: nei colori, nelle immagini o nelle idee.
+              Vengo dal mondo dello sviluppo software. Dopo alcuni
+              anni come developer, ho scelto di portare quella parte
+              tecnica dentro un lavoro più creativo.
             </p>
 
 
@@ -236,9 +295,9 @@
               class="intro-copy__secondary"
               data-motion-copy
             >
-              Vengo dal mondo dello sviluppo software. Dopo alcuni
-              anni come developer, ho scelto di portare quella parte
-              tecnica dentro un lavoro più creativo.
+              Viaggiare è una delle cose che amo di più e spesso
+              i luoghi che visito finiscono per entrare nei miei
+              lavori: nei colori, nelle immagini o nelle idee.
             </p>
 
           </div>
@@ -334,11 +393,6 @@
           Alcuni dei miei lavori
         </h2>
 
-        <p>
-          Una selezione di progetti tra web design,
-          sviluppo e direzione creativa.
-        </p>
-
       </div>
 
     </section>
@@ -368,21 +422,6 @@
             >
               Lorenzo Magnanini
             </h3>
-
-          </div>
-
-
-          <div class="case__intro">
-
-            <span class="case__category">
-              Portfolio · Drone &amp; FPV
-            </span>
-
-            <p>
-              Portfolio digitale sviluppato per dare centralità
-              a video e riprese, con un linguaggio essenziale
-              e cinematografico.
-            </p>
 
           </div>
 
@@ -476,15 +515,19 @@
 
               </div>
 
-              <!-- TEST: live site on desktop, over the replica (which stays as fallback) -->
-              <iframe
-                class="lm-site-frame"
-                src="https://lorenzomagnanini.com"
-                title="Anteprima dal vivo di lorenzomagnanini.com"
-                loading="lazy"
+              <!-- site recording, over the replica (which stays as fallback) -->
+              <video
+                class="lm-site-video"
+                data-project-video
+                data-src="lorenzomagnanini.mp4"
+                muted
+                loop
+                playsinline
+                autoplay
+                preload="none"
                 tabindex="-1"
                 aria-hidden="true"
-              ></iframe>
+              ></video>
 
             </div>
 
@@ -566,13 +609,6 @@
 
         </div>
 
-
-        <p>
-          Un universo digitale più materico ed evocativo,
-          costruito attorno a dettagli, immagini e unicità
-          dei pezzi.
-        </p>
-
       </header>
 
 
@@ -608,17 +644,38 @@
       </a>
 
 
-      <div class="project-reel__caption">
+      <dl
+        class="case__meta"
+        data-case-reveal
+      >
 
-        <h4>
-          Maga Alchemy
-        </h4>
+        <div>
+          <dt>Servizi</dt>
+          <dd>Web Design · Development · Photo Shooting</dd>
+        </div>
 
-        <span>
-          Web Design · Creative Direction
-        </span>
+        <div>
+          <dt>Settore</dt>
+          <dd>Gioielli artigianali</dd>
+        </div>
 
-      </div>
+        <div>
+          <dt>Online</dt>
+          <dd>
+            <a
+              href="https://la-maga-alchemy.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="case__visit"
+              aria-label="Guarda il sito di La Maga Alchemy (si apre in una nuova scheda)"
+            >
+              Guarda il sito online
+              <span aria-hidden="true">↗</span>
+            </a>
+          </dd>
+        </div>
+
+      </dl>
 
     </section>
 
@@ -652,13 +709,6 @@
           </h3>
 
         </div>
-
-
-        <p>
-          Una presenza calda e naturale che traduce
-          il carattere artigianale del progetto in
-          un'esperienza digitale riconoscibile.
-        </p>
 
       </header>
 
@@ -695,17 +745,38 @@
       </a>
 
 
-      <div class="project-reel__caption">
+      <dl
+        class="case__meta"
+        data-case-reveal
+      >
 
-        <h4>
-          Pomeranze
-        </h4>
+        <div>
+          <dt>Servizi</dt>
+          <dd>Web Design · Development · Photo Shooting</dd>
+        </div>
 
-        <span>
-          Web Design · Creative Direction
-        </span>
+        <div>
+          <dt>Settore</dt>
+          <dd>Fiori · agricoltura</dd>
+        </div>
 
-      </div>
+        <div>
+          <dt>Online</dt>
+          <dd>
+            <a
+              href="https://pomeranz-e.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="case__visit"
+              aria-label="Guarda il sito di Pomeranze (si apre in una nuova scheda)"
+            >
+              Guarda il sito online
+              <span aria-hidden="true">↗</span>
+            </a>
+          </dd>
+        </div>
+
+      </dl>
 
     </section>
 
@@ -713,7 +784,7 @@
 
 
     <!-- =======================================================
-         SELECTED CONCEPTS — PROGETTI IMMAGINATI
+         SELECTED CONCEPTS — CONCEPT CREATIVI
          ======================================================= -->
 
     <section
@@ -736,14 +807,14 @@
               class="motion-title"
               data-motion-title
             >
-              Progetti <span class="accent">immaginati.</span>
+              Concept <span class="accent">creativi.</span>
             </h2>
 
           </div>
 
           <p>
-            Luoghi, idee e atmosfere trasformati
-            in esperienze digitali.
+            Progetti personali ispirati ai luoghi
+            che visito.
           </p>
 
         </div>
@@ -784,9 +855,9 @@
             <div class="concept__meta">
 
               <div class="concept__text">
-                <span class="concept__category">Wedding · Live site</span>
+                <span class="concept__category">Wedding</span>
                 <h3 class="concept__title">Elena &amp; Alex</h3>
-                <p class="concept__place">Un archivio personale del matrimonio, in cinque momenti.</p>
+                <p class="concept__place">Un sito post matrimoniale.</p>
               </div>
 
               <span class="circle-arrow" aria-hidden="true">↗</span>
@@ -829,9 +900,9 @@
             <div class="concept__meta">
 
               <div class="concept__text">
-                <span class="concept__category">Travel · Live site</span>
+                <span class="concept__category">Travel</span>
                 <h3 class="concept__title">Mongolfiere</h3>
-                <p class="concept__place">Vang Vieng, Laos — voli all'alba e al tramonto sopra la valle.</p>
+                <p class="concept__place">Sito per un’esperienza in mongolfiera in Laos, ispirato a un mio viaggio.</p>
               </div>
 
               <span class="circle-arrow" aria-hidden="true">↗</span>
@@ -896,569 +967,7 @@
       </div>
 
 
-      <div class="services__layout">
-
-        <div
-          class="service-list"
-          role="tablist"
-          aria-label="Servizi"
-        >
-
-          <button
-            class="service-tab is-active"
-            type="button"
-            data-service-tab="web"
-            aria-selected="true"
-          >
-
-            <div>
-
-              <strong>
-                Web
-              </strong>
-
-              <p>
-                Siti web e landing page progettati su misura,
-                dalla struttura alla pubblicazione.
-              </p>
-
-            </div>
-
-            <i aria-hidden="true"></i>
-
-          </button>
-
-
-          <button
-            class="service-tab"
-            type="button"
-            data-service-tab="direction"
-            aria-selected="false"
-          >
-
-            <div>
-
-              <strong>
-                Creative direction
-              </strong>
-
-              <p>
-                Direzione visiva e sistemi grafici per costruire
-                una presenza coerente e riconoscibile.
-              </p>
-
-            </div>
-
-            <i aria-hidden="true"></i>
-
-          </button>
-
-
-          <button
-            class="service-tab"
-            type="button"
-            data-service-tab="presence"
-            aria-selected="false"
-          >
-
-            <div>
-
-              <strong>
-                Digital Presence
-              </strong>
-
-              <p>
-                Contenuti e strumenti digitali per costruire
-                e mantenere una presenza online coerente.
-              </p>
-
-            </div>
-
-            <i aria-hidden="true"></i>
-
-          </button>
-
-        </div>
-
-
-        <div class="service-stage" data-service-stage>
-
-          <!-- WEB -->
-
-          <article
-            class="service-scene is-active"
-            data-service-scene="web"
-            data-web-focus=""
-          >
-
-            <div class="service-scene__meta">
-
-              <span>
-                Web Design
-              </span>
-
-            </div>
-
-
-            <div class="service-scene__stage3d" data-stage3d>
-
-              <div class="stage3d-inner">
-
-                <div class="web3d-shadow"></div>
-
-                <div class="web3d-panel web3d-panel--back" data-panel="back">
-
-                  <div class="web3d-panel__bar">
-                    <i></i><i></i><i></i>
-                  </div>
-
-                  <div class="web3d-panel__nav">
-                    <b class="web3d-panel__brand">NOVA</b>
-                    <i></i><i></i>
-                  </div>
-
-                  <h4 class="web3d-panel__subhead">About the studio</h4>
-
-                  <p class="web3d-panel__copy">
-                    Design, craft and a quiet kind of care.
-                  </p>
-
-                  <div class="web3d-panel__block web3d-panel__block--soft"></div>
-
-                </div>
-
-                <div class="web3d-panel web3d-panel--main" data-panel="main">
-
-                  <div class="web3d-panel__bar">
-                    <i></i><i></i><i></i>
-                  </div>
-
-                  <div class="web3d-panel__nav">
-
-                    <b class="web3d-panel__brand">NOVA</b>
-
-                    <div class="web3d-panel__navlinks" data-content>
-                      <span>Work</span>
-                      <span>Studio</span>
-                      <span>Contact</span>
-                    </div>
-
-                    <span class="web3d-panel__navcta">Let's talk</span>
-
-                  </div>
-
-                  <div class="web3d-panel__hero">
-                    <span class="web3d-panel__herotag">Selected Work</span>
-                  </div>
-
-                  <span class="web3d-panel__eyebrow" data-landing-only>Free 20-minute consultation</span>
-
-                  <h3 class="web3d-panel__headline">
-                    Design that feels considered.
-                  </h3>
-
-                  <p class="web3d-panel__copy">
-                    Web design, development and digital direction
-                    for independent studios.
-                  </p>
-
-                  <span class="web3d-panel__cta">View the work →</span>
-
-                  <div class="web3d-panel__cards" data-content>
-
-                    <div class="web3d-panel__card">
-                      <b>Editorial</b>
-                      <small>Visual systems</small>
-                    </div>
-
-                    <div class="web3d-panel__card">
-                      <b>Craft</b>
-                      <small>Built to last</small>
-                    </div>
-
-                  </div>
-
-                  <div class="web3d-panel__footer">
-                    <span>Nova Studio — 2025</span>
-                  </div>
-
-                </div>
-
-                <div class="web3d-panel web3d-panel--mobile" data-panel="mobile">
-
-                  <div class="web3d-panel__bar web3d-panel__bar--mobile"></div>
-
-                  <div class="web3d-panel__mobilenav">
-                    <b class="web3d-panel__brand">NOVA</b>
-                    <i class="web3d-panel__burger"></i>
-                  </div>
-
-                  <div class="web3d-panel__block"></div>
-
-                  <h4 class="web3d-panel__mheadline">
-                    Design that feels considered.
-                  </h4>
-
-                  <span class="web3d-panel__cta web3d-panel__cta--mobile">View the work →</span>
-
-                </div>
-
-                <div class="web3d-devpanel" data-panel="dev">
-
-                  <div class="web3d-devpanel__bar">
-                    <i></i><i></i><i></i>
-                  </div>
-
-                  <div class="web3d-devpanel__code">
-
-                    <div class="web3d-devpanel__line">
-                      <span class="tok-key">function</span>
-                      <span class="tok-fn">Home</span>() {
-                    </div>
-
-                    <div class="web3d-devpanel__line web3d-devpanel__line--indent">
-                      return &lt;<span class="tok-tag">Hero</span> /&gt;
-                    </div>
-
-                    <div class="web3d-devpanel__line">}</div>
-
-                    <div class="web3d-devpanel__line web3d-devpanel__line--muted">
-                      // build --watch<i class="web3d-devpanel__cursor"></i>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="web3d-seopanel" data-panel="seo">
-
-                  <div class="web3d-seopanel__url">www.novastudio.com</div>
-                  <div class="web3d-seopanel__title">Nova Studio — Web Design &amp; Digital Direction</div>
-                  <div class="web3d-seopanel__desc">
-                    Independent studio for web design, branding
-                    and digital presence, based in Milan.
-                  </div>
-
-                </div>
-
-                <div class="web3d-cmspanel" data-panel="cms">
-
-                  <div class="web3d-cmspanel__side">
-                    <span class="is-active">Pages</span>
-                    <span>Media</span>
-                    <span>Settings</span>
-                  </div>
-
-                  <div class="web3d-cmspanel__main">
-
-                    <div class="web3d-cmspanel__row">
-                      <b>Homepage</b>
-                      <small class="web3d-cmspanel__tag web3d-cmspanel__tag--live">Published</small>
-                    </div>
-
-                    <div class="web3d-cmspanel__row">
-                      <b>About</b>
-                      <small class="web3d-cmspanel__tag web3d-cmspanel__tag--draft">Draft</small>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="service-subgrid" data-subgrid>
-
-              <div class="subgrid-item" style="--i:0" data-focus="webdesign">
-                <span>01</span>
-                <p>Web Design</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:1" data-focus="development">
-                <span>02</span>
-                <p>Development</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:2" data-focus="responsive">
-                <span>03</span>
-                <p>Responsive Design</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:3" data-focus="landing">
-                <span>04</span>
-                <p>Landing Pages</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:4" data-focus="seo">
-                <span>05</span>
-                <p>SEO di base</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:5" data-focus="cms">
-                <span>06</span>
-                <p>Gestione &amp; aggiornamenti</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-            </div>
-
-          </article>
-
-
-          <!-- CREATIVE DIRECTION -->
-
-          <article
-            class="service-scene"
-            data-service-scene="direction"
-            aria-hidden="true"
-          >
-
-            <div class="service-scene__meta">
-
-              <span>
-                Visual World
-              </span>
-
-            </div>
-
-
-            <div class="service-scene__stage3d" data-stage3d>
-
-              <div class="stage3d-inner">
-
-                <div class="dir3d-plate"></div>
-
-                <div class="dir3d-card dir3d-card--photo"></div>
-
-                <div class="dir3d-card dir3d-card--frame">
-                  <span>EDITORIAL</span>
-                </div>
-
-                <div class="dir3d-card dir3d-card--clay"></div>
-
-                <div class="dir3d-card dir3d-card--sage"></div>
-
-                <div class="dir3d-card dir3d-card--type">
-                  <b>Aa</b>
-                  <small>Typography</small>
-                </div>
-
-                <div class="dir3d-palette">
-
-                  <i style="--c:#f1ece2"></i>
-                  <i style="--c:#c3a471"></i>
-                  <i style="--c:#b06a4c"></i>
-                  <i style="--c:#2f2e2b"></i>
-
-                </div>
-
-                <div class="dir3d-card dir3d-card--dark">
-                  <small>
-                    CREATIVE<br>
-                    DIRECTION
-                  </small>
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="service-subgrid" data-subgrid>
-
-              <div class="subgrid-item" style="--i:0">
-                <span>01</span>
-                <p>Visual Direction</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:1">
-                <span>02</span>
-                <p>Art Direction</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:2">
-                <span>03</span>
-                <p>Typography</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:3">
-                <span>04</span>
-                <p>Color Systems</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:4">
-                <span>05</span>
-                <p>Image Curation</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:5">
-                <span>06</span>
-                <p>AI Visual Content</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-            </div>
-
-          </article>
-
-
-          <!-- DIGITAL PRESENCE -->
-
-          <article
-            class="service-scene"
-            data-service-scene="presence"
-            aria-hidden="true"
-          >
-
-            <div class="service-scene__meta">
-
-              <span>
-                Digital Ecosystem
-              </span>
-
-            </div>
-
-
-            <div class="service-scene__stage3d" data-stage3d>
-
-              <div class="stage3d-inner">
-
-                <div class="pres3d-plate"></div>
-                <div class="pres3d-shadow"></div>
-
-                <div class="pres3d-node pres3d-node--website">
-
-                  <div class="pres3d-node__bar">
-                    <i></i><i></i><i></i>
-                  </div>
-
-                  <div class="pres3d-node__addressbar"></div>
-
-                  <div class="pres3d-node__hero"></div>
-
-                  <div class="pres3d-node__cols">
-                    <div class="pres3d-node__block pres3d-node__block--half"></div>
-                    <div class="pres3d-node__block pres3d-node__block--half"></div>
-                  </div>
-
-                </div>
-
-                <div class="pres3d-node pres3d-node--newsletter">
-
-                  <div class="pres3d-node__line pres3d-node__line--title pres3d-node__line--w85"></div>
-
-                  <div class="pres3d-node__line pres3d-node__line--w80"></div>
-                  <div class="pres3d-node__line pres3d-node__line--w60"></div>
-                  <div class="pres3d-node__line pres3d-node__line--w40"></div>
-
-                  <div class="pres3d-node__cta"></div>
-
-                </div>
-
-                <div class="pres3d-node pres3d-node--social">
-
-                  <div class="pres3d-node__avatar"></div>
-
-                  <div class="pres3d-node__photo"></div>
-
-                  <div class="pres3d-node__line pres3d-node__line--w60"></div>
-                  <div class="pres3d-node__line pres3d-node__line--w35"></div>
-
-                  <div class="pres3d-node__micro">
-                    <i></i><i></i><i></i>
-                  </div>
-
-                </div>
-
-                <div class="pres3d-node pres3d-node--local">
-
-                  <div class="pres3d-node__pin"></div>
-
-                  <div class="pres3d-node__line pres3d-node__line--title pres3d-node__line--w70"></div>
-
-                  <div class="pres3d-node__stars">★ ★ ★ ★ ★</div>
-
-                  <div class="pres3d-node__line pres3d-node__line--w80"></div>
-                  <div class="pres3d-node__line pres3d-node__line--w55"></div>
-
-                </div>
-
-                <div class="pres3d-node pres3d-node--editorial">
-
-                  <div class="pres3d-node__calendar">
-                    <i></i><i></i><i></i>
-                    <i></i><i class="is-marked"></i><i></i>
-                    <i></i><i></i><i class="is-marked"></i>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="service-subgrid" data-subgrid>
-
-              <div class="subgrid-item" style="--i:0">
-                <span>01</span>
-                <p>Social Presence</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:1">
-                <span>02</span>
-                <p>Content Creation</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:2">
-                <span>03</span>
-                <p>Editorial Planning</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:3">
-                <span>04</span>
-                <p>Email Marketing</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:4">
-                <span>05</span>
-                <p>Google Business</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-              <div class="subgrid-item" style="--i:5">
-                <span>06</span>
-                <p>Local SEO</p>
-                <i class="subgrid-item__bar" aria-hidden="true"></i>
-              </div>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-
-      <!-- MOBILE — EDITORIAL ACCORDION -->
+      <!-- EDITORIAL ACCORDION — shared by every breakpoint -->
 
       <div class="services-mobile" data-services-mobile>
 
@@ -1477,8 +986,8 @@
           <div class="service-accordion__panel" data-accordion-panel>
 
             <p class="service-accordion__desc">
-              Siti web e landing page progettati su misura,
-              dalla struttura alla pubblicazione.
+              Siti web essenziali, curati e coerenti con ciò
+              che vuoi comunicare.
             </p>
 
             <ul class="service-accordion__list">
@@ -1510,17 +1019,23 @@
           <div class="service-accordion__panel" data-accordion-panel>
 
             <p class="service-accordion__desc">
-              Direzione visiva e sistemi grafici per costruire
-              una presenza coerente e riconoscibile.
+              Direzione visiva e creazione di contenuti per
+              costruire un’immagine coerente, riconoscibile
+              e adatta al tuo progetto.
             </p>
 
             <ul class="service-accordion__list">
-              <li>Visual Direction</li>
-              <li>Art Direction</li>
-              <li>Typography</li>
-              <li>Color Systems</li>
-              <li>Image Curation</li>
-              <li>AI Visual Content</li>
+              <li>Stile visivo</li>
+              <li>Colori</li>
+              <li>Tipografia</li>
+              <li>Contenuti visivi</li>
+              <li>Shooting fotografico</li>
+              <li>Riprese video*</li>
+              <li>Riprese drone*</li>
+              <li class="service-accordion__note">
+                * Disponibili in collaborazione con operatore
+                specializzato.
+              </li>
             </ul>
 
           </div>
@@ -1543,17 +1058,18 @@
           <div class="service-accordion__panel" data-accordion-panel>
 
             <p class="service-accordion__desc">
-              Contenuti e strumenti digitali per costruire
-              e mantenere una presenza online coerente.
+              Supporto nella gestione dei principali strumenti
+              digitali per costruire una presenza online più
+              chiara e coerente.
             </p>
 
             <ul class="service-accordion__list">
-              <li>Social Presence</li>
-              <li>Content Creation</li>
-              <li>Editorial Planning</li>
-              <li>Email Marketing</li>
-              <li>Google Business</li>
-              <li>Local SEO</li>
+              <li>Contenuti social</li>
+              <li>Piano editoriale</li>
+              <li>Google Business Profile</li>
+              <li>SEO locale</li>
+              <li>Email marketing</li>
+              <li>Supporto alla presenza online</li>
             </ul>
 
           </div>
@@ -1715,14 +1231,7 @@
             aria-label="Custom website, su preventivo. Scrivimi per parlarne."
           >
 
-            <span class="offer__top">
-
-              <svg class="offer__glyph" viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M24 9v30M9 24h30M13.4 13.4l21.2 21.2M34.6 13.4 13.4 34.6"></path>
-                <circle cx="24" cy="24" r="3.4"></circle>
-              </svg>
-
-            </span>
+            <span class="offer__top"></span>
 
             <h3 class="offer__title">
               Custom<br>
@@ -1789,7 +1298,7 @@
         <div class="contact-intro">
 
           <h2 class="contact__title">
-            Scrivimi, raccontami cosa stai costruendo.
+            Contatti
           </h2>
 
         </div>
@@ -1825,7 +1334,36 @@
           </a>
 
           <a
-            href="#"
+            href="https://wa.me/393703036838"
+            target="_blank"
+            rel="noopener"
+            class="contact-card"
+          >
+            <span class="contact-card__main">
+              <span
+                class="contact-card__icon"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3.5 20.5l1.2-4.3a8.5 8.5 0 1 1 3.2 3.1z"></path>
+                  <path d="M9.2 8.6c-.5 1.2.2 3 1.7 4.5s3.300 2.200 4.500 1.700l.6-1.300-1.800-1-.9.800c-.8-.3-1.900-1.400-2.200-2.200l.8-.9-1-1.800z"></path>
+                </svg>
+              </span>
+              <span class="contact-card__body">
+                <span class="contact-card__label">WhatsApp</span>
+                <span class="contact-card__value">+39 370 303 6838</span>
+              </span>
+            </span>
+            <span
+              class="contact-card__arrow"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </a>
+
+          <a
+            href="https://www.instagram.com/_delphi.terhell/"
             target="_blank"
             rel="noopener"
             class="contact-card"
@@ -1855,7 +1393,7 @@
           </a>
 
           <a
-            href="#"
+            href="https://www.linkedin.com/in/delphi-terhell-3ba69b234/"
             target="_blank"
             rel="noopener"
             class="contact-card"
@@ -1891,7 +1429,7 @@
         <div class="contact-meta">
           <span class="contact-meta__label">Based in</span>
           <span class="contact-meta__value">
-            Italy · available for remote projects
+            Italy · Bologna · Modena · available for remote projects
           </span>
         </div>
 

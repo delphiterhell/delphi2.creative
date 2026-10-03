@@ -1,0 +1,8 @@
+.git
+.claude
+.wrangler
+node_modules
+wrangler.jsonc
+.assetsignore
+wfonts.com.txt
+image.png
