@@ -366,8 +366,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       varying vec2 vUv;
 
+      // no sin(): on phone GPUs the classic sin-based hash breaks
+      // down into visible stripes that crawl across the image
       float hash(vec2 p) {
-        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+        p3 += dot(p3, p3.yzx + 33.33);
+        return fract((p3.x + p3.y) * p3.z);
       }
 
       float noise(vec2 p) {
@@ -437,6 +441,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         uv += d * 0.036 * boost * amp * visible;
+
+        // past the image border, fold back in instead of dragging
+        // the last row of pixels into streaks
+        uv = 1.0 - abs(1.0 - abs(uv));
 
         gl_FragColor = texture2D(uImage, uv);
       }
