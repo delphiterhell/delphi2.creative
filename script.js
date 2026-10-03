@@ -351,7 +351,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const fragmentSource = `
-      precision mediump float;
+      // phones really compute mediump at 16 bits, which flattens the
+      // noise below into a still image: ask for highp where it exists
+      #ifdef GL_FRAGMENT_PRECISION_HIGH
+        precision highp float;
+      #else
+        precision mediump float;
+      #endif
 
       uniform sampler2D uImage;
       uniform vec2 uRes;
