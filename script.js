@@ -423,15 +423,20 @@ document.addEventListener("DOMContentLoaded", () => {
           fbm(p + 2.0 * q + vec2(8.3, 2.8) - t * 0.6)
         ) - 0.5;
 
+        // the drift is measured against the screen width: on portrait
+        // screens the vertical share is cut down to match, otherwise the
+        // tall side would stretch it into a fast, smeared wobble
+        vec2 amp = vec2(1.0, min(1.0, canvasRatio));
+
         // portrait screens zoom the image in, so the same drift
-        // reads smaller: boost it progressively as the ratio narrows
+        // reads smaller: a light boost as the ratio narrows
         float boost = mix(
           1.0,
-          2.2,
+          1.3,
           clamp((1.2 - canvasRatio) / 0.7, 0.0, 1.0)
         );
 
-        uv += d * 0.036 * boost * visible;
+        uv += d * 0.036 * boost * amp * visible;
 
         gl_FragColor = texture2D(uImage, uv);
       }
